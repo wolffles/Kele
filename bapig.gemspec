@@ -5,7 +5,7 @@ Gem::specification.new do |s|
   s.summary = 'Kele API Client'
   s.description = 'A client for the Bloc API'
   s.authors = ['Wolfgang Truong']
-  s.email = 'hannah@example.com'
+  s.email = 'Wolfgang.truong@gmail.com'
   s.files = ['lib/bapig.rb']
   s.require_paths = ["lib"]
   s.homepage = 'http://rubygems.org/gems/bapig'
