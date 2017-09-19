@@ -11,4 +11,5 @@ Gem::specification.new do |s|
   s.homepage = 'http://rubygems.org/gems/bapig'
   s.license = 'MIT'
   s.add_runtime_dependency 'httparty', '~>0.13'
+  s.add_runtime_dependency 'json'
 end
