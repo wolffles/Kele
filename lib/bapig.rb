@@ -14,9 +14,14 @@ class Bapig
   #client = Bapig.new(email,password)
   #client.get_me => returns hash object refering to account
   def get_me
-    response = self.class.get(base_api_endpoint("users/me"), headers: { "authorization" => @auth_token })
-    JSON.parse(response.body,symbolize_names: true)
-    #JSON.parse is a method that takes a JSON string object, and turns it into a ruby data structure. it basically helps humans read it. 
+    response = self.class.get(base_api_endpoint("users/me"), headers: { :authorization => @auth_token })
+    JSON.parse(response.body, symbolize_names: true)
+    #JSON.parse is a method that takes a JSON string object, and turns it into a ruby data structure. it basically helps humans read it.
+  end
+
+  def get_mentor_availability(mentor_id = 623967) # 623967 is brittany's_id
+    response = self.class.get(base_api_endpoint("mentors/#{mentor_id}/student_availability"), headers: {"authorization" => @auth_token})
+    JSON.parse(response.body, symbolize_names: true)
   end
 
 
