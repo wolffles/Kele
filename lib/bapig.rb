@@ -1,7 +1,8 @@
 require 'httparty'
+require './lib/roadmap.rb'
 class Bapig
   include HTTParty
-
+  include Roadmap
 
   def initialize(email, password)
     # httparty documentation
@@ -23,7 +24,6 @@ class Bapig
     response = self.class.get(base_api_endpoint("mentors/#{mentor_id}/student_availability"), headers: {"authorization" => @auth_token})
     JSON.parse(response.body, symbolize_names: true)
   end
-
 
 private
 
