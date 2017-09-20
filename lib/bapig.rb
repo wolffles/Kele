@@ -1,7 +1,8 @@
 require 'httparty'
+require './lib/roadmap.rb'
 class Bapig
   include HTTParty
-
+  include Roadmap
 
   def initialize(email, password)
     # httparty documentation
@@ -15,10 +16,9 @@ class Bapig
   #client.get_me => returns hash object refering to account
   def get_me
     response = self.class.get(base_api_endpoint("users/me"), headers: { "authorization" => @auth_token })
-    JSON.parse(response.body,symbolize_names: true)
-    #JSON.parse is a method that takes a JSON string object, and turns it into a ruby data structure. it basically helps humans read it. 
+    JSON.parse(reponse.body,symbolize_names: true)
+    #JSON.parse is a method that takes a JSON string object, and turns it into a ruby data structure. it basically helps humans read it.
   end
-
 
 private
 
