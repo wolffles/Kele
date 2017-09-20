@@ -11,6 +11,7 @@ class Bapig
     puts response.code
     raise "invalid email/password " if response.code == 401
     @auth_token = response["auth_token"]
+    @auth_user = response["user"]
   end
   #client = Bapig.new(email,password)
   #client.get_me => returns hash object refering to account
@@ -25,6 +26,17 @@ class Bapig
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  def get_messages(n = nil)
+    response = self.class.get(base_api_endpoint("message_threads"), headers: {"authorization" => @auth_token})
+    parsed = JSON.parse(response.body, symbolize_names: true)
+    n == nil ? parsed : parsed[:items][0..n-1]
+  end
+
+  def create_message(sender, recipient_id, subject, text)
+    response = self.class.post(base_api_endpoint("messages"), body: {"sender": sender, "recipient_id": recipient_id, "subject": subject, "stripped-text": text }, header: {:authorization => @auth_token})
+    puts response.code
+    response.body
+  end
 private
 
   def base_api_endpoint(end_point)
