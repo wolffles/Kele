@@ -6,7 +6,7 @@ class Bapig
 
   def initialize(email, password)
     # httparty documentation
-    response = self.class.post(base_api_endpoint("sessions"), body: { "email": email, "password": password })
+    response = self.class.post(base_api_endpoint("sessions"), body: { "email": email, password: password })
     #self.class.post is the same as <class_name>.post
     puts response.code
     raise "invalid email/password " if response.code == 401
@@ -36,6 +36,12 @@ class Bapig
     response = self.class.post(base_api_endpoint("messages"), body: {"sender": sender, "recipient_id": recipient_id, "subject": subject, "stripped-text": text }, header: {:authorization => @auth_token})
     puts response.code
     response.body
+  end
+
+# hashs can accept assigning like `<variable>: <value>` or `"string": <value>` when calling :<symbols> or "strings"
+  def create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)
+    response = self.class.post(base_api_endpoint("checkpoint_submissions"), body: {assignment_branch: assignment_branch, checkpoint_id: checkpoint_id, assignment_commit_link: assignment_commit_link, comment: comment})
+    puts response.code
   end
 private
 
