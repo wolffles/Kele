@@ -11,7 +11,6 @@ class Bapig
     puts response.code
     raise "invalid email/password " if response.code == 401
     @auth_token = response["auth_token"]
-    @auth_user = response["user"]
   end
   #client = Bapig.new(email,password)
   #client.get_me => returns hash object refering to account
@@ -40,9 +39,18 @@ class Bapig
 
 # hashs can accept assigning like `<variable>: <value>` or `"string": <value>` when calling :<symbols> or "strings"
   def create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)
-    response = self.class.post(base_api_endpoint("checkpoint_submissions"), body: {assignment_branch: assignment_branch, checkpoint_id: checkpoint_id, assignment_commit_link: assignment_commit_link, comment: comment}, header {authorization: @auth_token})
+    values = {
+      assignment_branch: assignment_branch,
+      checkpoint_id: checkpoint_id,
+      assignment_commit_link: assignment_commit_link,
+      comment: comment,
+      enrollment_id: 26838
+    }
+    response = self.class.post(base_api_endpoint("checkpoint_submissions"), body: values, headers: {:authorization => @auth_token})
     puts response.code
+    JSON.parse(response.body)
   end
+
 private
 
   def base_api_endpoint(end_point)
